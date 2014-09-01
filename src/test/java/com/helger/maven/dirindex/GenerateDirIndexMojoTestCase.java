@@ -1,5 +1,4 @@
 /**
- * Copyright (C) 2006-2014 phloc systems (www.phloc.com)
  * Copyright (C) 2014 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
@@ -24,6 +23,11 @@ import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 public class GenerateDirIndexMojoTestCase extends AbstractMojoTestCase
 {
   /**
+   * This test requires an installed version of the plugin in the local Maven
+   * repository. So call <code>mvn install</code> to run this test for the first
+   * time. Afterwards the test can be run again until the next modification
+   * occurs.
+   *
    * @throws Exception
    *         if any
    */
