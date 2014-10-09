@@ -17,7 +17,6 @@
 package com.helger.maven.dirindex;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -38,7 +37,9 @@ import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.SimpleFileIO;
+import com.helger.commons.io.file.filter.FileFilterAlwaysFalse;
 import com.helger.commons.io.file.filter.FilenameFilterMatchAnyRegEx;
+import com.helger.commons.io.file.filter.IFileFilter;
 import com.helger.commons.io.file.iterate.FileSystemFolderTree;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -261,18 +262,12 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     try
     {
       // Build the index
-      FilenameFilter aDirFilter = null;
+      IFileFilter aDirFilter = null;
       if (!recursive)
-        aDirFilter = new FilenameFilter ()
-        {
-          public boolean accept (final File aDir, final String sName)
-          {
-            return false;
-          }
-        };
+        aDirFilter = FileFilterAlwaysFalse.getInstance ();
 
       // Build the filename filter
-      FilenameFilter aFileFilter = null;
+      IFileFilter aFileFilter = null;
       if (StringHelper.hasText (filenameRegEx))
         aFileFilter = new FilenameFilterMatchAnyRegEx (filenameRegEx);
 
