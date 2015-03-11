@@ -29,7 +29,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.slf4j.impl.StaticLoggerBinder;
 
-import com.helger.commons.collections.ContainerHelper;
+import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.collections.NonBlockingStack;
 import com.helger.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.helger.commons.io.file.ComparatorFileName;
@@ -191,7 +191,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
                              if (aFiles != null)
                              {
                                aTotalFiles.inc (aFiles.size ());
-                               for (final File aFile : ContainerHelper.getSorted (aFiles,
+                               for (final File aFile : CollectionHelper.getSorted (aFiles,
                                                                                   new ComparatorFileName (Locale.US)))
                                {
                                  final IMicroElement eFile = eRoot.appendElement ("file");
