@@ -19,7 +19,6 @@ package com.helger.maven.dirindex;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
@@ -29,27 +28,28 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.slf4j.impl.StaticLoggerBinder;
 
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.collections.NonBlockingStack;
-import com.helger.commons.hierarchy.DefaultHierarchyWalkerCallback;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.NonBlockingStack;
+import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
+import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.commons.io.file.ComparatorFileName;
 import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.io.file.filter.FileFilterAlwaysFalse;
-import com.helger.commons.io.file.filter.FilenameFilterMatchAnyRegEx;
+import com.helger.commons.io.file.filter.AbstractFileFilter;
+import com.helger.commons.io.file.filter.FileFilterFilenameMatchAnyRegEx;
 import com.helger.commons.io.file.filter.IFileFilter;
 import com.helger.commons.io.file.iterate.FileSystemFolderTree;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.impl.MicroDocument;
+import com.helger.commons.microdom.MicroDocument;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.tree.utils.walk.TreeWalker;
+import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.folder.DefaultFolderTreeItem;
-import com.helger.commons.xml.serialize.XMLWriterSettings;
+import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -167,50 +167,51 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     final NonBlockingStack <String> aDirs = new NonBlockingStack <String> ();
     final MutableInt aTotalDirs = new MutableInt (0);
     final MutableInt aTotalFiles = new MutableInt (0);
-    TreeWalker.walkTree (aFileTree,
-                         new DefaultHierarchyWalkerCallback <DefaultFolderTreeItem <String, File, List <File>>> ()
-                         {
-                           @Override
-                           public void onItemBeforeChildren (@Nonnull final DefaultFolderTreeItem <String, File, List <File>> aItem)
+    TreeVisitor.visitTree (aFileTree,
+                           new DefaultHierarchyVisitorCallback <DefaultFolderTreeItem <String, File, List <File>>> ()
                            {
-                             final String sDirName = aItem.getID ();
-                             final int nSubDirCount = aItem.getChildCount ();
-                             final List <File> aFiles = aItem.getData ();
-
-                             aDirs.push (sDirName);
-
-                             final String sImplodedDirName = StringHelper.getImploded (FilenameHelper.UNIX_SEPARATOR,
-                                                                                       aDirs);
-                             final IMicroElement eDir = eRoot.appendElement ("directory");
-                             eDir.setAttribute ("name", sImplodedDirName);
-                             eDir.setAttribute ("basename", sDirName);
-                             eDir.setAttribute ("subdircount", Integer.toString (nSubDirCount));
-                             eDir.setAttribute ("filecount", aFiles == null ? 0 : aFiles.size ());
-                             aTotalDirs.inc ();
-
-                             if (aFiles != null)
+                             @Override
+                             public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultFolderTreeItem <String, File, List <File>> aItem)
                              {
-                               aTotalFiles.inc (aFiles.size ());
-                               for (final File aFile : CollectionHelper.getSorted (aFiles,
-                                                                                  new ComparatorFileName (Locale.US)))
-                               {
-                                 final IMicroElement eFile = eRoot.appendElement ("file");
-                                 eFile.setAttribute ("name",
-                                                     sImplodedDirName +
-                                                         FilenameHelper.UNIX_SEPARATOR +
-                                                         aFile.getName ());
-                                 eFile.setAttribute ("basename", aFile.getName ());
-                                 eFile.setAttribute ("filesize", aFile.length ());
-                               }
-                             }
-                           }
+                               final String sDirName = aItem.getID ();
+                               final int nSubDirCount = aItem.getChildCount ();
+                               final List <File> aFiles = aItem.getData ();
 
-                           @Override
-                           public void onItemAfterChildren (@Nonnull final DefaultFolderTreeItem <String, File, List <File>> aItem)
-                           {
-                             aDirs.pop ();
-                           }
-                         });
+                               aDirs.push (sDirName);
+
+                               final String sImplodedDirName = StringHelper.getImploded (FilenameHelper.UNIX_SEPARATOR,
+                                                                                         aDirs);
+                               final IMicroElement eDir = eRoot.appendElement ("directory");
+                               eDir.setAttribute ("name", sImplodedDirName);
+                               eDir.setAttribute ("basename", sDirName);
+                               eDir.setAttribute ("subdircount", Integer.toString (nSubDirCount));
+                               eDir.setAttribute ("filecount", aFiles == null ? 0 : aFiles.size ());
+                               aTotalDirs.inc ();
+
+                               if (aFiles != null)
+                               {
+                                 aTotalFiles.inc (aFiles.size ());
+                                 for (final File aFile : CollectionHelper.getSorted (aFiles, new ComparatorFileName ()))
+                                 {
+                                   final IMicroElement eFile = eRoot.appendElement ("file");
+                                   eFile.setAttribute ("name",
+                                                       sImplodedDirName +
+                                                           FilenameHelper.UNIX_SEPARATOR +
+                                                           aFile.getName ());
+                                   eFile.setAttribute ("basename", aFile.getName ());
+                                   eFile.setAttribute ("filesize", aFile.length ());
+                                 }
+                               }
+                               return EHierarchyVisitorReturn.CONTINUE;
+                             }
+
+                             @Override
+                             public EHierarchyVisitorReturn onItemAfterChildren (@Nonnull final DefaultFolderTreeItem <String, File, List <File>> aItem)
+                             {
+                               aDirs.pop ();
+                               return EHierarchyVisitorReturn.CONTINUE;
+                             }
+                           });
     eRoot.setAttribute ("totaldirs", aTotalDirs.intValue ());
     eRoot.setAttribute ("totalfiles", aTotalFiles.intValue ());
     if (false)
@@ -264,12 +265,23 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       // Build the index
       IFileFilter aDirFilter = null;
       if (!recursive)
-        aDirFilter = FileFilterAlwaysFalse.getInstance ();
+      {
+        // FIXME replace with class from ph-commons > 6.0.0-beta1
+        aDirFilter = new AbstractFileFilter ()
+        {
+          @Override
+          public boolean matchesThisFilter (final File aValue)
+          {
+            // Always false
+            return false;
+          }
+        };
+      }
 
       // Build the filename filter
       IFileFilter aFileFilter = null;
       if (StringHelper.hasText (filenameRegEx))
-        aFileFilter = new FilenameFilterMatchAnyRegEx (filenameRegEx);
+        aFileFilter = new FileFilterFilenameMatchAnyRegEx (filenameRegEx);
 
       // Build the tree to be handled
       final FileSystemFolderTree aFileTree = new FileSystemFolderTree (sourceDirectory, aDirFilter, aFileFilter);
