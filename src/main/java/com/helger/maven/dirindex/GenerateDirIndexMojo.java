@@ -37,7 +37,7 @@ import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.io.file.filter.AbstractFileFilter;
+import com.helger.commons.io.file.filter.FileFilterFalse;
 import com.helger.commons.io.file.filter.FileFilterFilenameMatchAnyRegEx;
 import com.helger.commons.io.file.filter.IFileFilter;
 import com.helger.commons.io.file.iterate.FileSystemFolderTree;
@@ -265,18 +265,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       // Build the index
       IFileFilter aDirFilter = null;
       if (!recursive)
-      {
-        // FIXME replace with class from ph-commons > 6.0.0-beta1
-        aDirFilter = new AbstractFileFilter ()
-        {
-          @Override
-          public boolean matchesThisFilter (final File aValue)
-          {
-            // Always false
-            return false;
-          }
-        };
-      }
+        aDirFilter = new FileFilterFalse ();
 
       // Build the filename filter
       IFileFilter aFileFilter = null;
