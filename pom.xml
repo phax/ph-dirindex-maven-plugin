@@ -87,13 +87,14 @@
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-commons</artifactId>
-      <version>6.1.0</version>
+      <version>6.1.1</version>
     </dependency>
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
       <version>2.1</version>
     </dependency>
+    
     <dependency>
       <groupId>org.apache.maven.plugin-testing</groupId>
       <artifactId>maven-plugin-testing-harness</artifactId>
