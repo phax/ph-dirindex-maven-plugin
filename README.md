@@ -211,6 +211,22 @@ Example output for a dirindex.xml file (taken from the [ph-schematron](https://g
 </index>
 ```
 
+Explanation of the three elements:
+  * `index` - root element:
+    * `@sourcedirectory` the absolute source directory on disc that was scanned
+    * `@totaldirs` the overall number of directories contained (recursive)
+    * `@totalfiles` the overall number of files contained (recursive) 
+  * `directory` - represents a single directory
+    * `@name` the full directory name relative to the starting directory
+    * `@basename` the name of the directory without any paths
+    * `@subdircount` the number of contained sub-directories (excluding `.` and `..`)
+    * `@filecount` the number of contained files in this directory (not recursive)
+  * `file` - represents a single file
+    * `@name` the full filename including the directories relative to the starting directory
+    * `@basename` the name of the file without any paths
+    * `@filesize` the size of the file in bytes
+  
+
 ---
 
 On Twitter: <a href="https://twitter.com/philiphelger">Follow @philiphelger</a>
