@@ -35,7 +35,6 @@ import com.helger.commons.io.file.ComparatorFileName;
 import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.io.file.filter.FileFilterFalse;
 import com.helger.commons.io.file.filter.FileFilterFilenameMatchAnyRegEx;
 import com.helger.commons.io.file.filter.IFileFilter;
@@ -48,7 +47,6 @@ import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.folder.DefaultFolderTreeItem;
-import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -74,8 +72,8 @@ public final class GenerateDirIndexMojo extends AbstractMojo
   MavenProject project;
 
   /**
-   * The directory which should be index. This directory must be specified! This
-   * directory is included in the resulting index file.
+   * The directory which should be indexed. This directory is mandatory to be
+   * specified. This directory is included in the resulting index file.
    *
    * @required
    * @parameter property=sourceDirectory
@@ -278,7 +276,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
 
       // And write the XML to the file
       final File aTempFile = new File (aTempTargetDir, targetFilename);
-      SimpleFileIO.writeFile (aTempFile, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
+      MicroWriter.writeToFile (aDoc, aTempFile);
 
       // Add output directory as a resource-directory
       final Resource aResource = new Resource ();
