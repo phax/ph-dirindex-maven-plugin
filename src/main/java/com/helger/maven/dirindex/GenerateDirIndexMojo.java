@@ -26,7 +26,6 @@ import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
-import org.slf4j.impl.StaticLoggerBinder;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.NonBlockingStack;
@@ -196,8 +195,8 @@ public final class GenerateDirIndexMojo extends AbstractMojo
                                    final IMicroElement eFile = eRoot.appendElement ("file");
                                    eFile.setAttribute ("name",
                                                        sImplodedDirName +
-                                                           FilenameHelper.UNIX_SEPARATOR +
-                                                           aFile.getName ());
+                                                               FilenameHelper.UNIX_SEPARATOR +
+                                                               aFile.getName ());
                                    eFile.setAttribute ("basename", aFile.getName ());
                                    eFile.setAttribute ("filesize", aFile.length ());
                                  }
@@ -221,7 +220,6 @@ public final class GenerateDirIndexMojo extends AbstractMojo
 
   public void execute () throws MojoExecutionException
   {
-    StaticLoggerBinder.getSingleton ().setMavenLog (getLog ());
     if (tempDirectory == null)
       throw new MojoExecutionException ("No dirindex temp directory specified!");
     if (tempDirectory.exists () && !tempDirectory.isDirectory ())

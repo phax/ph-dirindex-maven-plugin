@@ -37,8 +37,8 @@ public class GenerateDirIndexMojoTestCase extends AbstractMojoTestCase
     assertNotNull (aPOM);
     assertTrue (aPOM.exists ());
 
-    final GenerateDirIndexMojo myMojo = (GenerateDirIndexMojo) lookupMojo ("generate-dirindex", aPOM);
-    assertNotNull (myMojo);
-    myMojo.execute ();
+    final GenerateDirIndexMojo aMojo = (GenerateDirIndexMojo) lookupMojo ("generate-dirindex", aPOM);
+    assertNotNull (aMojo);
+    aMojo.execute ();
   }
 }

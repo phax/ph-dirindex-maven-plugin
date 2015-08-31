@@ -26,7 +26,7 @@
   </parent>
   <groupId>com.helger.maven</groupId>
   <artifactId>ph-dirindex-maven-plugin</artifactId>
-  <version>1.1.2-SNAPSHOT</version>
+  <version>1.2.0-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <name>ph-dirindex-maven-plugin</name>
   <description>Maven plugin for emitting build information in a project</description>
@@ -63,7 +63,7 @@
   </developers>
 
   <properties>
-    <maven.version>3.0</maven.version>
+    <maven.version>3.0.5</maven.version>
   </properties>
 
   <dependencies>
@@ -89,16 +89,16 @@
       <artifactId>ph-commons</artifactId>
       <version>6.1.1</version>
     </dependency>
-    <dependency>
-      <groupId>org.codehaus.plexus</groupId>
-      <artifactId>plexus-utils</artifactId>
-      <version>2.1</version>
-    </dependency>
     
     <dependency>
       <groupId>org.apache.maven.plugin-testing</groupId>
       <artifactId>maven-plugin-testing-harness</artifactId>
       <version>2.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -109,19 +109,25 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
         <configuration>
-          <goalPrefix>ph-dirindex</goalPrefix>
+          <goalPrefix>generate-dirindex</goalPrefix>
         </configuration>
         <executions>
           <execution>
-            <id>mojo-descriptor</id>
+            <id>descriptor</id>
             <goals>
               <goal>descriptor</goal>
             </goals>
           </execution>
           <execution>
-            <id>help-goal</id>
+            <id>helpmojo</id>
             <goals>
               <goal>helpmojo</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>addPluginArtifactMetadata</id>
+            <goals>
+              <goal>addPluginArtifactMetadata</goal>
             </goals>
           </execution>
         </executions>
