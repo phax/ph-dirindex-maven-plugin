@@ -20,7 +20,7 @@ import java.io.File;
 
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
-public class GenerateDirIndexMojoTestCase extends AbstractMojoTestCase
+public final class GenerateDirIndexMojoTestCase extends AbstractMojoTestCase
 {
   /**
    * This test requires an installed version of the plugin in the local Maven
