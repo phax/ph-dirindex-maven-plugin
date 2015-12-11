@@ -22,7 +22,7 @@
     <pluginExecution>
       <pluginExecutionFilter>
         <goals>
-          <goal>generate-buildinfo</goal>
+          <goal>generate-dirindex</goal>
         </goals>
       </pluginExecutionFilter>
       <action>
