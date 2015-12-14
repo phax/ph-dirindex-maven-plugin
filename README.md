@@ -7,7 +7,7 @@ A Maven 3.x plugin for creating file list for later retrieval. This can be used 
 <plugin>
   <groupId>com.helger.maven</groupId>
   <artifactId>ph-dirindex-maven-plugin</artifactId>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
   <executions>
     <execution>
       <goals>

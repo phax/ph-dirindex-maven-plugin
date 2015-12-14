@@ -18,6 +18,12 @@
 
 -->
 <changelog xmlns="http://www.helger.com/xsd/changelog/1.0" version="1.0" component="ph-dirindex-maven-plugin">
+  <release date="2015-12-14" version="1.2.1" />
+  <entry date="2015-12-12" category="tech" action="fix">
+    <change>
+      <text locale="en">Fixed goal name for m2e integration</text>
+    </change>
+  </entry>
   <release date="2015-08-31" version="1.2.0" />
   <entry date="2015-08-31" category="tech" action="change">
     <change>
