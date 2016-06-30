@@ -17,14 +17,14 @@
 package com.helger.maven.dirindex;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.maven.model.Build;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.plugin.testing.stubs.MavenProjectStub;
 import org.codehaus.plexus.util.ReaderFactory;
+
+import com.helger.commons.collection.ext.CommonsArrayList;
 
 public final class GenerateDirIndexMojoProjectStub extends MavenProjectStub
 {
@@ -61,13 +61,8 @@ public final class GenerateDirIndexMojoProjectStub extends MavenProjectStub
     build.setTestOutputDirectory (getBasedir () + "/target/test-classes");
     setBuild (build);
 
-    final List <String> compileSourceRoots = new ArrayList <String> ();
-    compileSourceRoots.add (getBasedir () + "/src/main/java");
-    setCompileSourceRoots (compileSourceRoots);
-
-    final List <String> testCompileSourceRoots = new ArrayList <String> ();
-    testCompileSourceRoots.add (getBasedir () + "/src/test/java");
-    setTestCompileSourceRoots (testCompileSourceRoots);
+    setCompileSourceRoots (new CommonsArrayList<> (getBasedir () + "/src/main/java"));
+    setTestCompileSourceRoots (new CommonsArrayList<> (getBasedir () + "/src/test/java"));
   }
 
   /** {@inheritDoc} */

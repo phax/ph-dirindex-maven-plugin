@@ -20,6 +20,8 @@ import java.io.File;
 
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
+import com.helger.commons.io.resource.ClassPathResource;
+
 public final class GenerateDirIndexMojoTestCase extends AbstractMojoTestCase
 {
   /**
@@ -36,6 +38,9 @@ public final class GenerateDirIndexMojoTestCase extends AbstractMojoTestCase
     final File aPOM = getTestFile ("src/test/resources/poms/unittest1/pom.xml");
     assertNotNull (aPOM);
     assertTrue (aPOM.exists ());
+
+    assertTrue ("You may need to build on the commandline once!",
+                new ClassPathResource ("/" + getPluginDescriptorLocation ()).exists ());
 
     final GenerateDirIndexMojo aMojo = (GenerateDirIndexMojo) lookupMojo ("generate-dirindex", aPOM);
     assertNotNull (aMojo);
