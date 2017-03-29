@@ -1,4 +1,4 @@
-#ph-dirindex-maven-plugin
+# ph-dirindex-maven-plugin
 
 A Maven 3.x plugin for creating file list for later retrieval. This can be used to create a file list of one or more arbitrary directories to save it to a file. The resulting file can be used from another JAR file as a "table of contents". 
 
@@ -43,7 +43,7 @@ Configuration items are:
      The filename within the `tempDirectory` and the `targetDirectory` to be used. The resulting file will always be UTF-8 encoded.
      Default: `dirindex.xml`
 
-#Output format
+# Output format
 Example output for a dirindex.xml file (taken from the [ph-schematron](https://github.com/phax/ph-schematron/) project):
 
 ```xml
