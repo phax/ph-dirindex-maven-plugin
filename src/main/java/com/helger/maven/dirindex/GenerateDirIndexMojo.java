@@ -27,14 +27,14 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.impl.NonBlockingStack;
+import com.helger.commons.collection.NonBlockingStack;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.file.filter.IFileFilter;
+import com.helger.commons.io.file.IFileFilter;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.string.StringHelper;
 import com.helger.tree.io.FileSystemFolderTree;
