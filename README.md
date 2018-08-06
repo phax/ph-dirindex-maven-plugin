@@ -3,7 +3,8 @@
 A Maven 3.x plugin for creating file list for later retrieval. This can be used to create a file list of one or more arbitrary directories to save it to a file. The resulting file can be used from another JAR file as a "table of contents". 
 
 # News and noteworthy
-  * v3.0.0 - work in progress
+
+* v3.0.0 - work in progress
     * Updated to ph-commons 9.0.0
 
 # Maven configuration
@@ -11,7 +12,7 @@ A Maven 3.x plugin for creating file list for later retrieval. This can be used 
 <plugin>
   <groupId>com.helger.maven</groupId>
   <artifactId>ph-dirindex-maven-plugin</artifactId>
-  <version>2.0.0</version>
+  <version>3.0.0</version>
   <executions>
     <execution>
       <goals>
