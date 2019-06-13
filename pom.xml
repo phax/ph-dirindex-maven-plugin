@@ -26,7 +26,7 @@
   </parent>
   <groupId>com.helger.maven</groupId>
   <artifactId>ph-dirindex-maven-plugin</artifactId>
-  <version>3.0.1-SNAPSHOT</version>
+  <version>3.0.1</version>
   <packaging>maven-plugin</packaging>
   <name>ph-dirindex-maven-plugin</name>
   <description>Maven plugin for emitting build information in a project</description>
@@ -45,7 +45,7 @@
     <connection>scm:git:git@github.com:phax/ph-dirindex-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:phax/ph-dirindex-maven-plugin.git</developerConnection>
     <url>http://github.com/phax/ph-dirindex-maven-plugin</url>
-    <tag>HEAD</tag>
+    <tag>ph-dirindex-maven-plugin-3.0.1</tag>
   </scm>
 
   <organization>
