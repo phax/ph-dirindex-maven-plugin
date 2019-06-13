@@ -25,6 +25,9 @@ import javax.annotation.Nonnull;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import com.helger.commons.collection.NonBlockingStack;
@@ -45,53 +48,39 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * @author Philip Helger
- * @goal generate-dirindex
- * @phase generate-resources
  * @description Create the index of a directory and store it into an XML file.
  *              The information will be part of the created JAR/WAR/... file.
  *              The resulting file will reside in a custom direc import
  *              com.helger.xml.microdom.IMicroDocument;tory of the created
  *              artifact.
  */
-@SuppressFBWarnings (value = { "UWF_UNWRITTEN_FIELD", "NP_UNWRITTEN_FIELD" }, justification = "set via maven property")
+@Mojo (name = "generate-dirindex", defaultPhase = LifecyclePhase.GENERATE_RESOURCES, threadSafe = true)
 public final class GenerateDirIndexMojo extends AbstractMojo
 {
-  /**
-   * The Maven Project.
-   *
-   * @parameter property="project"
-   * @required
-   * @readonly
-   */
+  @Parameter (property = "project", required = true, readonly = true)
   MavenProject project;
 
   /**
    * The directory which should be indexed. This directory is mandatory to be
    * specified. This directory is included in the resulting index file.
-   *
-   * @required
-   * @parameter property=sourceDirectory
    */
+  @Parameter (property = "sourceDirectory", required = true)
   private File sourceDirectory;
 
   /**
    * An optional regular expression to index only files that match this regular
    * expression. If it is not specified, all files are used.
-   *
-   * @parameter property=filenameRegEx
    */
+  @Parameter (property = "filenameRegEx")
   private String filenameRegEx;
 
   /**
    * Should the source directory be scanned recursively for files? true by
    * default.
-   *
-   * @parameter property="recursive" default-value="true"
    */
+  @Parameter (property = "recursive", defaultValue = "true")
   private boolean recursive = true;
 
   /**
@@ -101,6 +90,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
    * @parameter property=tempDirectory
    *            default-value="${project.build.directory}/dirindex-maven-plugin"
    */
+  @Parameter (property = "tempDirectory", defaultValue = "${project.build.directory}/dirindex-maven-plugin")
   private File tempDirectory;
 
   /**
@@ -108,18 +98,15 @@ public final class GenerateDirIndexMojo extends AbstractMojo
    * directory is relative to the tempDirectory and must not be provided. If
    * this directory is not specified, than the created target file will reside
    * by default in the root directory of the final artifact.
-   *
-   * @parameter property=targetDirectory default-value=""
    */
+  @Parameter (property = "targetDirectory", defaultValue = "")
   private String targetDirectory;
 
   /**
    * The filename within the tempDirectory and the targetDirectory to be used.
    * The resulting file will always be UTF-8 encoded.
-   *
-   * @required
-   * @parameter property=targetFilename default-value="dirindex.xml"
    */
+  @Parameter (property = "targetFilename", defaultValue = "dirindex.xml", required = true)
   private String targetFilename;
 
   public void setSourceDirectory (@Nonnull final File aDir)
@@ -129,6 +116,17 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       sourceDirectory = new File (project.getBasedir (), aDir.getPath ());
     if (!sourceDirectory.exists ())
       getLog ().error ("Source directory " + sourceDirectory.toString () + " does not exist!");
+  }
+
+  public void setTargetDirectory (@Nonnull final String sDir)
+  {
+    targetDirectory = sDir;
+    if (StringHelper.hasText (sDir))
+    {
+      final File td = new File (sDir);
+      if (td.isAbsolute ())
+        getLog ().error ("Target directory " + sDir + " should not be absolute");
+    }
   }
 
   public void setTempDirectory (@Nonnull final File aDir)
@@ -152,7 +150,9 @@ public final class GenerateDirIndexMojo extends AbstractMojo
   }
 
   @Nonnull
-  private IMicroDocument _getAsXML (@Nonnull final FileSystemFolderTree aFileTree) throws IOException
+  private IMicroDocument _getAsXML (@Nonnull final FileSystemFolderTree aFileTree,
+                                    @Nonnull final MutableInt aTotalDirs,
+                                    @Nonnull final MutableInt aTotalFiles) throws IOException
   {
     final String sBase = sourceDirectory.getCanonicalPath ();
     final IMicroDocument aDoc = new MicroDocument ();
@@ -160,8 +160,6 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     final IMicroElement eRoot = aDoc.appendElement ("index");
     eRoot.setAttribute ("sourcedirectory", sBase);
     final NonBlockingStack <String> aDirs = new NonBlockingStack <> ();
-    final MutableInt aTotalDirs = new MutableInt (0);
-    final MutableInt aTotalFiles = new MutableInt (0);
     TreeVisitor.visitTree (aFileTree,
                            new DefaultHierarchyVisitorCallback <DefaultFolderTreeItem <String, File, ICommonsList <File>>> ()
                            {
@@ -237,7 +235,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       {
         // Ensure that the directory exists
         if (!aTempTargetDir.mkdirs ())
-          throw new MojoExecutionException ("Failed to create dirindex temp-traget directory " + aTempTargetDir);
+          throw new MojoExecutionException ("Failed to create dirindex temp-target directory " + aTempTargetDir);
       }
     }
     else
@@ -270,11 +268,21 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       final FileSystemFolderTree aFileTree = new FileSystemFolderTree (sourceDirectory, aDirFilter, aFileFilter);
 
       // Convert file system tree to XML
-      final IMicroDocument aDoc = _getAsXML (aFileTree);
+      final MutableInt aTotalDirs = new MutableInt (0);
+      final MutableInt aTotalFiles = new MutableInt (0);
+      final IMicroDocument aDoc = _getAsXML (aFileTree, aTotalDirs, aTotalFiles);
+      final int nTotalDirs = aTotalDirs.intValue ();
+      final int nTotalFiles = aTotalFiles.intValue ();
+      getLog ().info ("Found a total of " +
+                      (nTotalDirs == 1 ? "1 directory" : nTotalDirs + " directories") +
+                      " and " +
+                      (nTotalFiles == 1 ? "1 file" : nTotalFiles + " files"));
 
       // And write the XML to the file
       final File aTempFile = new File (aTempTargetDir, targetFilename);
-      MicroWriter.writeToFile (aDoc, aTempFile);
+      if (MicroWriter.writeToFile (aDoc, aTempFile).isFailure ())
+        throw new MojoExecutionException ("Failed to write target file " + aTempFile.getAbsolutePath ());
+      getLog ().info ("Successfully created " + aTempFile.getAbsolutePath ());
 
       // Add output directory as a resource-directory
       final Resource aResource = new Resource ();
