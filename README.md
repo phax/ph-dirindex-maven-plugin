@@ -4,21 +4,13 @@ A Maven 3.x plugin for creating file list for later retrieval. This can be used 
 
 Note: the directory index file is created in a temporary directory (usually somewhere below `target`) and than added to the build path internally.
 
-# News and noteworthy
-
-* v3.0.1 - 2019-06-13
-    * Improved logging
-    * Using annotation based Maven configuration
-* v3.0.0 - 2018-08-06
-    * Updated to ph-commons 9.0.0
-
 # Maven configuration
 
 ```xml
 <plugin>
   <groupId>com.helger.maven</groupId>
   <artifactId>ph-dirindex-maven-plugin</artifactId>
-  <version>3.0.1</version>
+  <version>3.0.2</version>
   <executions>
     <execution>
       <goals>
@@ -236,7 +228,16 @@ Explanation of the three elements:
     * `@name` the full filename including the directories relative to the starting directory
     * `@basename` the name of the file without any paths
     * `@filesize` the size of the file in bytes
-  
+
+# News and noteworthy
+
+* v3.0.2 - 2020-03-11
+    * Release with recent library versions
+* v3.0.1 - 2019-06-13
+    * Improved logging
+    * Using annotation based Maven configuration
+* v3.0.0 - 2018-08-06
+    * Updated to ph-commons 9.0.0
 
 ---
 
