@@ -231,7 +231,7 @@ Explanation of the three elements:
 
 # News and noteworthy
 
-* v3.0.3 - work in progress
+* v3.0.3 - 2021-03-22
     * Updated to ph-commons 10
 * v3.0.2 - 2020-03-11
     * Release with recent library versions
