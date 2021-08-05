@@ -52,9 +52,8 @@ import com.helger.xml.microdom.serialize.MicroWriter;
  * @author Philip Helger
  * @description Create the index of a directory and store it into an XML file.
  *              The information will be part of the created JAR/WAR/... file.
- *              The resulting file will reside in a custom direc import
- *              com.helger.xml.microdom.IMicroDocument;tory of the created
- *              artifact.
+ *              The resulting file will reside in a custom directory of the
+ *              created artifact.
  */
 @Mojo (name = "generate-dirindex", defaultPhase = LifecyclePhase.GENERATE_RESOURCES, threadSafe = true)
 public final class GenerateDirIndexMojo extends AbstractMojo
