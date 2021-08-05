@@ -61,14 +61,14 @@ public final class GenerateDirIndexMojoProjectStub extends MavenProjectStub
     build.setTestOutputDirectory (getBasedir () + "/target/test-classes");
     setBuild (build);
 
-    setCompileSourceRoots (new CommonsArrayList<> (getBasedir () + "/src/main/java"));
-    setTestCompileSourceRoots (new CommonsArrayList<> (getBasedir () + "/src/test/java"));
+    setCompileSourceRoots (new CommonsArrayList <> (getBasedir () + "/src/main/java"));
+    setTestCompileSourceRoots (new CommonsArrayList <> (getBasedir () + "/src/test/java"));
   }
 
   /** {@inheritDoc} */
   @Override
   public File getBasedir ()
   {
-    return new File (super.getBasedir () + "/src/test/resources/poms/unittest1/");
+    return new File (super.getBasedir (), "/src/test/resources/poms/unittest1/");
   }
 }
