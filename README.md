@@ -10,7 +10,7 @@ Note: the directory index file is created in a temporary directory (usually some
 <plugin>
   <groupId>com.helger.maven</groupId>
   <artifactId>ph-dirindex-maven-plugin</artifactId>
-  <version>3.0.2</version>
+  <version>4.0.0</version>
   <executions>
     <execution>
       <goals>
@@ -231,6 +231,9 @@ Explanation of the three elements:
 
 # News and noteworthy
 
+* v4.0.0 - 2023-01-08
+    * Using Java 11 as the baseline
+    * Updated to ph-commons 11
 * v3.0.3 - 2021-03-22
     * Updated to ph-commons 10
 * v3.0.2 - 2020-03-11
