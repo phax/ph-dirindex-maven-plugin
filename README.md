@@ -233,6 +233,7 @@ Explanation of the three elements:
 
 * v4.0.1 - 2023-07-01
     * Removed the `maven-compat` dependencies for Maven 4 compatibility
+    * Build against Maven 3.5.0
 * v4.0.0 - 2023-01-08
     * Using Java 11 as the baseline
     * Updated to ph-commons 11

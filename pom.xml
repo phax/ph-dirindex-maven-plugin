@@ -67,7 +67,9 @@
   </prerequisites>
 
   <properties>
-    <maven.version>3.0</maven.version>
+    <maven.core.version>3.5.0</maven.core.version>
+    <maven.annot.version>3.5.1</maven.annot.version>
+    <maven.test.version>3.3.0</maven.test.version>
   </properties>
   
   <dependencyManagement>
@@ -86,19 +88,19 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
-      <version>${maven.version}</version>
+      <version>${maven.core.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.plugin-tools</groupId>
       <artifactId>maven-plugin-annotations</artifactId>
-      <version>${maven.version}</version>
+      <version>${maven.annot.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-core</artifactId>
-      <version>${maven.version}</version>
+      <version>${maven.core.version}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -114,7 +116,13 @@
     <dependency>
       <groupId>org.apache.maven.plugin-testing</groupId>
       <artifactId>maven-plugin-testing-harness</artifactId>
-      <version>3.3.0</version>
+      <version>${maven.test.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-compat</artifactId>
+      <version>${maven.core.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
