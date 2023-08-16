@@ -67,8 +67,8 @@
   </prerequisites>
 
   <properties>
-    <maven.core.version>3.5.0</maven.core.version>
-    <maven.annot.version>3.5.1</maven.annot.version>
+    <maven.core.version>3.8.1</maven.core.version>
+    <maven.annot.version>3.8.1</maven.annot.version>
     <maven.test.version>3.3.0</maven.test.version>
   </properties>
   
@@ -77,7 +77,7 @@
       <dependency>
         <groupId>com.helger.commons</groupId>
         <artifactId>ph-commons-parent-pom</artifactId>
-        <version>11.1.0</version>
+        <version>11.1.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
