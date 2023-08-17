@@ -67,8 +67,8 @@
   </prerequisites>
 
   <properties>
-    <maven.core.version>3.8.1</maven.core.version>
-    <maven.annot.version>3.8.1</maven.annot.version>
+    <maven.core.version>3.8.3</maven.core.version>
+    <maven.annot.version>3.8.2</maven.annot.version>
     <maven.test.version>3.3.0</maven.test.version>
   </properties>
   
