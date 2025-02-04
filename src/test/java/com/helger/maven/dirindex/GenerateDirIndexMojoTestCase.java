@@ -35,7 +35,7 @@ public final class GenerateDirIndexMojoTestCase extends AbstractMojoTestCase
    */
   public void testExamplePoms () throws Exception
   {
-    for (int i = 1; i <= 3; ++i)
+    for (int i = 1; i <= 4; ++i)
     {
       final File aPOM = getTestFile ("src/test/resources/poms/unittest" + i + "/pom.xml");
       assertNotNull (aPOM);
