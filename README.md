@@ -32,12 +32,12 @@ Configuration items are:
 
 * `File` **sourceDirectory**  
    The directory which should be indexed. This directory is mandatory to be specified. This directory is included in the resulting index file. No default present.
-* `String` **filenameRegEx**
+* `String` **filenameRegEx**  
    An optional regular expression to index only files that match this regular expression. If it is not specified, all files are used.
 * `boolean` **recursive**  
    Should the source directory be scanned recursively for files?  
    Defaults to `true`
-* `boolean` **sourceChildrenOnly** (since v4.0.2)
+* `boolean` **sourceChildrenOnly** (since v4.0.2)  
    Should the source directory itself be excluded from the listing? This only has an impact if recursive listing is enabled.
    Defaults to `false`
 * `File` **tempDirectory**  
@@ -49,10 +49,10 @@ Configuration items are:
 * `String` **targetFilename**  
    The filename within the `tempDirectory` and the `targetDirectory` to be used. The resulting file will always be UTF-8 encoded.
    Default: `dirindex.xml`
-* `String` **outputFormat**
+* `String` **outputFormat**  
    Defines the format of the result. Possible values are:
-       * `xml` - create XML output. This is the default value. Uses the UTF-8 character encoding.
-       * `text-name-only` (since 4.0.2) - creates simple text output with one line per directory and file. Uses LF (`\n`) as the line delimiter. Uses the UTF-8 character encoding.
+    * `xml` - create XML output. This is the default value. Uses the UTF-8 character encoding.
+    * `text-name-only` (since 4.0.2) - creates simple text output with one line per directory and file. Uses LF (`\n`) as the line delimiter. Uses the UTF-8 character encoding.
 
 # Output format
 Example output for a `dirindex.xml` file (taken from the [ph-schematron](https://github.com/phax/ph-schematron/) project):
