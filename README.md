@@ -1,5 +1,8 @@
 # ph-dirindex-maven-plugin
 
+[![javadoc](https://javadoc.io/badge2/com.helger.maven/ph-dirindex-maven-plugin/javadoc.svg)](https://javadoc.io/doc/com.helger.maven/ph-dirindex-maven-plugin)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.helger.maven/ph-dirindex-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.helger.maven/ph-dirindex-maven-plugin) 
+
 A Maven 3.x plugin for creating file list for later retrieval. This can be used to create a file list of one or more arbitrary directories to save it to a file. The resulting file can be used from another JAR file as a "table of contents".
 
 Note: the directory index file is created in a temporary directory (usually somewhere below `target`) and than added to the build path internally.
