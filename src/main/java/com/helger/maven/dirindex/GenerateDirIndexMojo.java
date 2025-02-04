@@ -80,7 +80,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
 
   /**
    * Should the source directory itself be excluded from the listing? This only
-   * has an impact if recursive listing is allowed.
+   * has an impact if recursive listing is enabled.
    *
    * @since 4.0.2
    */

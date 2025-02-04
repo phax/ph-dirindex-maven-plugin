@@ -10,7 +10,7 @@ Note: the directory index file is created in a temporary directory (usually some
 <plugin>
   <groupId>com.helger.maven</groupId>
   <artifactId>ph-dirindex-maven-plugin</artifactId>
-  <version>4.0.0</version>
+  <version>4.0.2</version>
   <executions>
     <execution>
       <goals>
@@ -23,31 +23,39 @@ Note: the directory index file is created in a temporary directory (usually some
     <filenameRegEx>.*\.test</filenameRegEx>
     <targetDirectory>test-files</targetDirectory>
     <targetFilename>dirindex.xml</targetFilename>
+    <outputFormat>xml</outputFormat>
   </configuration>
 </plugin>
 ```
 
 Configuration items are:
 
-  * `File` **sourceDirectory**  
-     The directory which should be indexed. This directory is mandatory to be specified. This directory is included in the resulting index file. No default present.
-  * `String` **filenameRegEx**
-     An optional regular expression to index only files that match this regular expression. If it is not specified, all files are used.
-  * `boolean` **recursive**  
-     Should the source directory be scanned recursively for files?  
-     Defaults to `true`
-  * `File` **tempDirectory**  
-     The directory where the temporary index file will be saved.
-     Default: `${project.build.directory}/dirindex-maven-plugin`
-  * `String` **targetDirectory**  
-     The directory within the target artifact where the file should reside. This directory is relative to the `tempDirectory` and must not be provided. If this directory is not specified, than the created target file will reside by default in the root directory of the final artifact.
-     Default: *empty String*
-  * `String` **targetFilename**  
-     The filename within the `tempDirectory` and the `targetDirectory` to be used. The resulting file will always be UTF-8 encoded.
-     Default: `dirindex.xml`
+* `File` **sourceDirectory**  
+   The directory which should be indexed. This directory is mandatory to be specified. This directory is included in the resulting index file. No default present.
+* `String` **filenameRegEx**
+   An optional regular expression to index only files that match this regular expression. If it is not specified, all files are used.
+* `boolean` **recursive**  
+   Should the source directory be scanned recursively for files?  
+   Defaults to `true`
+* `boolean` **sourceChildrenOnly** (since v4.0.2)
+   Should the source directory itself be excluded from the listing? This only has an impact if recursive listing is enabled.
+   Defaults to `false`
+* `File` **tempDirectory**  
+   The directory where the temporary index file will be saved.
+   Default: `${project.build.directory}/dirindex-maven-plugin`
+* `String` **targetDirectory**  
+   The directory within the target artifact where the file should reside. This directory is relative to the `tempDirectory` and must not be provided. If this directory is not specified, than the created target file will reside by default in the root directory of the final artifact.
+   Default: *empty String*
+* `String` **targetFilename**  
+   The filename within the `tempDirectory` and the `targetDirectory` to be used. The resulting file will always be UTF-8 encoded.
+   Default: `dirindex.xml`
+* `String` **outputFormat**
+   Defines the format of the result. Possible values are:
+       * `xml` - create XML output. This is the default value. Uses the UTF-8 character encoding.
+       * `text-name-only` (since 4.0.2) - creates simple text output with one line per directory and file. Uses LF (`\n`) as the line delimiter. Uses the UTF-8 character encoding.
 
 # Output format
-Example output for a dirindex.xml file (taken from the [ph-schematron](https://github.com/phax/ph-schematron/) project):
+Example output for a `dirindex.xml` file (taken from the [ph-schematron](https://github.com/phax/ph-schematron/) project):
 
 ```xml
 <index sourcedirectory="P:\git\ph-schematron\ph-schematron-testfiles\src\main\resources\test-sch" totaldirs="23" totalfiles="137">
@@ -231,6 +239,9 @@ Explanation of the three elements:
 
 # News and noteworthy
 
+* v4.0.2 - 2025-02-04
+   * Added new configuration property `sourceChildrenOnly` to omit the root directory from listing
+   * Added new configuration property `outputFormat` to be able to create different outputs
 * v4.0.1 - 2023-07-01
     * Removed the `maven-compat` dependencies for Maven 4 compatibility
     * Build against Maven 3.5.0
