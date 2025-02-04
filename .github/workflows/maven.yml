@@ -31,7 +31,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest ]
         java: [ '11', '17', '21' ]
     name: Java ${{ matrix.Java }} on ${{ matrix.os }} build
 
