@@ -33,9 +33,23 @@ public final class GenerateDirIndexMojoTestCase extends AbstractMojoTestCase
    * @throws Exception
    *         if any
    */
-  public void testSomething () throws Exception
+  public void test1 () throws Exception
   {
     final File aPOM = getTestFile ("src/test/resources/poms/unittest1/pom.xml");
+    assertNotNull (aPOM);
+    assertTrue (aPOM.exists ());
+
+    assertTrue ("You may need to build on the commandline once!",
+                new ClassPathResource ("/" + getPluginDescriptorLocation ()).exists ());
+
+    final GenerateDirIndexMojo aMojo = (GenerateDirIndexMojo) lookupMojo ("generate-dirindex", aPOM);
+    assertNotNull (aMojo);
+    aMojo.execute ();
+  }
+
+  public void test2 () throws Exception
+  {
+    final File aPOM = getTestFile ("src/test/resources/poms/unittest2/pom.xml");
     assertNotNull (aPOM);
     assertTrue (aPOM.exists ());
 

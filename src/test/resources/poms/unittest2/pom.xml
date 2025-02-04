@@ -50,9 +50,11 @@
           <tempDirectory>../../../../../target/dirindex-maven-plugin</tempDirectory>
           <sourceDirectory>../../../../../src/main</sourceDirectory>
           <recursive>true</recursive>
+          <!-- added -->
+          <sourceChildrenOnly>true</sourceChildrenOnly>
           <filenameRegEx>.*\.xml</filenameRegEx>
           <targetDirectory></targetDirectory>
-          <targetFilename>dirindex-created1.xml</targetFilename>
+          <targetFilename>dirindex-created2.xml</targetFilename>
         </configuration>
       </plugin>
     </plugins>

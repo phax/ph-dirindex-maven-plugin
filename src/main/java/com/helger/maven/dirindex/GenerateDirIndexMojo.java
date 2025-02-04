@@ -296,8 +296,8 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       // And write the result to the file
       final File aTempFile = new File (aTempTargetDir, targetFilename);
       if (aOutputCreator.writeToFile (aTempFile).isFailure ())
-        throw new MojoExecutionException ("Failed to write target file " + aTempFile.getAbsolutePath ());
-      getLog ().info ("Successfully created " + aTempFile.getAbsolutePath ());
+        throw new MojoExecutionException ("Failed to write target file " + aTempFile.getCanonicalPath ());
+      getLog ().info ("Successfully created " + aTempFile.getCanonicalPath ());
 
       // Add output directory as a resource-directory
       final Resource aResource = new Resource ();
