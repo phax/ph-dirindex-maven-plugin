@@ -113,6 +113,17 @@ public final class GenerateDirIndexMojo extends AbstractMojo
   @Parameter (property = "targetFilename", defaultValue = "dirindex.xml", required = true)
   private String targetFilename;
 
+  // Defaults to XML
+  private IOutputDataCreator m_aOutputCreator = new OutputDataCreatorXML ();
+
+  /**
+   * Define the output format to be used. The default is XML. Possible values
+   * are (case insensitive): <code>xml</code> and <code>text-name-only</code>.
+   * The Default is XML.
+   */
+  @Parameter (property = "outputFormat", defaultValue = "xml", required = true)
+  private String outputFormat;
+
   public void setSourceDirectory (@Nonnull final File aDir)
   {
     sourceDirectory = aDir;
@@ -163,12 +174,24 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     sourceChildrenOnly = b;
   }
 
+  public void setOutputFormat (final String s)
+  {
+    if (s.equalsIgnoreCase ("xml"))
+    {
+      // It's the default nothing to do here
+    }
+    else
+      if (s.equalsIgnoreCase ("text-name-only"))
+        m_aOutputCreator = new OutputDataCreatorTextNameOnly ();
+      else
+        getLog ().error ("The output format '" + s + "' is final not supported");
+  }
+
   private void _createOutputData (@Nonnull final FileSystemFolderTree aFileTree,
-                                  @Nonnull final IOutputDataCreator aOutputCreator,
                                   @Nonnull final MutableInt aTotalDirs,
                                   @Nonnull final MutableInt aTotalFiles) throws IOException
   {
-    aOutputCreator.init (sourceDirectory.getCanonicalPath ());
+    m_aOutputCreator.init (sourceDirectory.getCanonicalPath ());
 
     final NonBlockingStack <String> aDirStack = new NonBlockingStack <> ();
     TreeVisitor.visitTree (aFileTree, new DefaultHierarchyVisitorCallback <> ()
@@ -189,7 +212,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
         }
         else
         {
-          aOutputCreator.addDirectory (sImplodedDirName, sDirName, nSubDirCount, aFiles == null ? 0 : aFiles.size ());
+          m_aOutputCreator.addDirectory (sImplodedDirName, sDirName, nSubDirCount, aFiles == null ? 0 : aFiles.size ());
           aTotalDirs.inc ();
         }
 
@@ -198,9 +221,9 @@ public final class GenerateDirIndexMojo extends AbstractMojo
           aTotalFiles.inc (aFiles.size ());
           for (final File aFile : aFiles.getSortedInline (Comparator.comparing (File::getName)))
           {
-            aOutputCreator.addFile (sImplodedDirName + FilenameHelper.UNIX_SEPARATOR + aFile.getName (),
-                                    aFile.getName (),
-                                    aFile.length ());
+            m_aOutputCreator.addFile (sImplodedDirName + FilenameHelper.UNIX_SEPARATOR + aFile.getName (),
+                                      aFile.getName (),
+                                      aFile.length ());
           }
         }
         return EHierarchyVisitorReturn.CONTINUE;
@@ -214,7 +237,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       }
     });
 
-    aOutputCreator.addFinalSums (aTotalDirs.intValue (), aTotalFiles.intValue ());
+    m_aOutputCreator.addFinalSums (aTotalDirs.intValue (), aTotalFiles.intValue ());
   }
 
   public void execute () throws MojoExecutionException
@@ -281,9 +304,8 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       final MutableInt aTotalDirs = new MutableInt (0);
       final MutableInt aTotalFiles = new MutableInt (0);
 
-      // Create main structure
-      final IOutputDataCreator aOutputCreator = new XMLOutputDataCreator ();
-      _createOutputData (aFileSystemTree, aOutputCreator, aTotalDirs, aTotalFiles);
+      // Fill the output data
+      _createOutputData (aFileSystemTree, aTotalDirs, aTotalFiles);
 
       // Log results
       final int nTotalDirs = aTotalDirs.intValue ();
@@ -295,7 +317,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
 
       // And write the result to the file
       final File aTempFile = new File (aTempTargetDir, targetFilename);
-      if (aOutputCreator.writeToFile (aTempFile).isFailure ())
+      if (m_aOutputCreator.writeToFile (aTempFile).isFailure ())
         throw new MojoExecutionException ("Failed to write target file " + aTempFile.getCanonicalPath ());
       getLog ().info ("Successfully created " + aTempFile.getCanonicalPath ());
 

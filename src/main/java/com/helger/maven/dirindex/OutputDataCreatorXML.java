@@ -33,7 +33,7 @@ import com.helger.xml.microdom.serialize.MicroWriter;
  *
  * @author Philip Helger
  */
-public class XMLOutputDataCreator implements IOutputDataCreator
+public class OutputDataCreatorXML implements IOutputDataCreator
 {
   private IMicroDocument m_aDoc;
   private IMicroElement m_eRoot;
