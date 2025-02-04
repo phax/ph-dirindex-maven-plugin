@@ -243,8 +243,8 @@ Explanation of the three elements:
 # News and noteworthy
 
 * v4.0.2 - 2025-02-04
-   * Added new configuration property `sourceChildrenOnly` to omit the root directory from listing
-   * Added new configuration property `outputFormat` to be able to create different outputs
+   * Added new configuration property `sourceChildrenOnly` to omit the root directory from listing. See [#6](https://github.com/phax/ph-dirindex-maven-plugin/issues/6) - thx @reda-alaoui
+   * Added new configuration property `outputFormat` to be able to create different outputs. See [#7](https://github.com/phax/ph-dirindex-maven-plugin/issues/7) - thx @reda-alaoui
 * v4.0.1 - 2023-07-01
     * Removed the `maven-compat` dependencies for Maven 4 compatibility
     * Build against Maven 3.5.0
