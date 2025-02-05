@@ -193,7 +193,8 @@ public final class GenerateDirIndexMojo extends AbstractMojo
   {
     m_aOutputCreator.init (sourceDirectory.getCanonicalPath ());
 
-    final NonBlockingStack <String> aDirStack = new NonBlockingStack <> ();
+    final NonBlockingStack <String> aAbsoluteDirStack = new NonBlockingStack <> ();
+    final NonBlockingStack <String> aLoggingDirStack = new NonBlockingStack <> ();
     TreeVisitor.visitTree (aFileTree, new DefaultHierarchyVisitorCallback <> ()
     {
       @Override
@@ -203,14 +204,13 @@ public final class GenerateDirIndexMojo extends AbstractMojo
         final int nSubDirCount = aItem.getChildCount ();
         final ICommonsList <File> aFiles = aItem.getData ();
 
-        aDirStack.push (sDirName);
-        final String sImplodedDirName = StringHelper.getImploded (FilenameHelper.UNIX_SEPARATOR, aDirStack);
+        aAbsoluteDirStack.push (sDirName);
+        final boolean bLogThisDirectory = !recursive || !sourceChildrenOnly || aAbsoluteDirStack.size () > 1;
+        if (bLogThisDirectory)
+          aLoggingDirStack.push (sDirName);
 
-        if (recursive && aDirStack.size () == 1 && sourceChildrenOnly)
-        {
-          // Don't show the starting directory itself
-        }
-        else
+        final String sImplodedDirName = StringHelper.getImploded (FilenameHelper.UNIX_SEPARATOR, aLoggingDirStack);
+        if (bLogThisDirectory)
         {
           m_aOutputCreator.addDirectory (sImplodedDirName, sDirName, nSubDirCount, aFiles == null ? 0 : aFiles.size ());
           aTotalDirs.inc ();
@@ -232,7 +232,11 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       @Override
       public EHierarchyVisitorReturn onItemAfterChildren (@Nonnull final DefaultFolderTreeItem <String, File, ICommonsList <File>> aItem)
       {
-        aDirStack.pop ();
+        final boolean bLogThisDirectory = !recursive || !sourceChildrenOnly || aAbsoluteDirStack.size () > 1;
+        if (bLogThisDirectory)
+          aLoggingDirStack.pop ();
+
+        aAbsoluteDirStack.pop ();
         return EHierarchyVisitorReturn.CONTINUE;
       }
     });
