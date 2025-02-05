@@ -13,7 +13,7 @@ Note: the directory index file is created in a temporary directory (usually some
 <plugin>
   <groupId>com.helger.maven</groupId>
   <artifactId>ph-dirindex-maven-plugin</artifactId>
-  <version>4.0.2</version>
+  <version>4.0.3</version>
   <executions>
     <execution>
       <goals>
@@ -242,6 +242,8 @@ Explanation of the three elements:
 
 # News and noteworthy
 
+* v4.0.3 - 2025-02-05
+   * If the property `sourceChildrenOnly` is used, the root path is not contained in the output. See [#8](https://github.com/phax/ph-dirindex-maven-plugin/issues/8) - thx @reda-alaoui
 * v4.0.2 - 2025-02-04
    * Added new configuration property `sourceChildrenOnly` to omit the root directory from listing. See [#6](https://github.com/phax/ph-dirindex-maven-plugin/issues/6) - thx @reda-alaoui
    * Added new configuration property `outputFormat` to be able to create different outputs. See [#7](https://github.com/phax/ph-dirindex-maven-plugin/issues/7) - thx @reda-alaoui
