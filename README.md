@@ -13,7 +13,7 @@ Note: the directory index file is created in a temporary directory (usually some
 <plugin>
   <groupId>com.helger.maven</groupId>
   <artifactId>ph-dirindex-maven-plugin</artifactId>
-  <version>4.0.3</version>
+  <version>4.0.4</version>
   <executions>
     <execution>
       <goals>
