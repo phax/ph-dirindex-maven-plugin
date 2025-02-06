@@ -19,6 +19,7 @@ package com.helger.maven.dirindex;
 import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
@@ -65,18 +66,27 @@ public final class GenerateDirIndexMojo extends AbstractMojo
   private File sourceDirectory;
 
   /**
-   * An optional regular expression to index only files that match this regular
-   * expression. If it is not specified, all files are used.
-   */
-  @Parameter (property = "filenameRegEx")
-  private String filenameRegEx;
-
-  /**
    * Should the source directory be scanned recursively for files? true by
    * default.
    */
   @Parameter (property = "recursive", defaultValue = "true")
   private boolean recursive = true;
+
+  /**
+   * An optional regular expression to index only directories that match this
+   * regular expression. If it is not specified, all directories are used.
+   *
+   * @since 4.0.4
+   */
+  @Parameter (property = "dirnameRegEx")
+  private String dirnameRegEx;
+
+  /**
+   * An optional regular expression to index only files that match this regular
+   * expression. If it is not specified, all files are used.
+   */
+  @Parameter (property = "filenameRegEx")
+  private String filenameRegEx;
 
   /**
    * Should the source directory itself be excluded from the listing? This only
@@ -124,11 +134,11 @@ public final class GenerateDirIndexMojo extends AbstractMojo
   @Parameter (property = "outputFormat", defaultValue = "xml", required = true)
   private String outputFormat;
 
-  public void setSourceDirectory (@Nonnull final File aDir)
+  public void setSourceDirectory (@Nonnull final File aDir) throws IOException
   {
     sourceDirectory = aDir;
     if (!sourceDirectory.isAbsolute ())
-      sourceDirectory = new File (project.getBasedir (), aDir.getPath ());
+      sourceDirectory = new File (project.getBasedir (), aDir.getPath ()).getCanonicalFile ();
     if (!sourceDirectory.exists ())
       getLog ().error ("Source directory " + sourceDirectory.toString () + " does not exist!");
   }
@@ -184,7 +194,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       if (s.equalsIgnoreCase ("text-name-only"))
         m_aOutputCreator = new OutputDataCreatorTextNameOnly ();
       else
-        getLog ().error ("The output format '" + s + "' is final not supported");
+        getLog ().error ("The output format '" + s + "' is not supported");
   }
 
   private void _createOutputData (@Nonnull final FileSystemFolderTree aFileTree,
@@ -221,7 +231,10 @@ public final class GenerateDirIndexMojo extends AbstractMojo
           aTotalFiles.inc (aFiles.size ());
           for (final File aFile : aFiles.getSortedInline (Comparator.comparing (File::getName)))
           {
-            m_aOutputCreator.addFile (sImplodedDirName + FilenameHelper.UNIX_SEPARATOR + aFile.getName (),
+            // Directory name may be empty
+            m_aOutputCreator.addFile (StringHelper.getConcatenatedOnDemand (sImplodedDirName,
+                                                                            FilenameHelper.UNIX_SEPARATOR,
+                                                                            aFile.getName ()),
                                       aFile.getName (),
                                       aFile.length ());
           }
@@ -287,11 +300,16 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     try
     {
       // Build the index
-      IFileFilter aDirFilter = null;
+      Predicate <File> aDirFilter = null;
       if (!recursive)
       {
         // Ignore all sub directories
         aDirFilter = x -> false;
+      }
+      if (StringHelper.hasText (dirnameRegEx))
+      {
+        aDirFilter = aDirFilter == null ? IFileFilter.filenameMatchAnyRegEx (dirnameRegEx)
+                                        : aDirFilter.and (IFileFilter.filenameMatchAnyRegEx (dirnameRegEx));
       }
 
       // Build the filename filter

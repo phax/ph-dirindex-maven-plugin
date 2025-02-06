@@ -44,7 +44,7 @@ public class OutputDataCreatorTextNameOnly implements IOutputDataCreator
                             @Nonnegative final int nSubDirCount,
                             @Nonnegative final int nFileCount)
   {
-    m_aSB.append (sDirectoryName).append ('\n');
+    m_aSB.append (sDirectoryName).append ('/').append ('\n');
   }
 
   public void addFile (@Nonnull @Nonempty final String sFileName,

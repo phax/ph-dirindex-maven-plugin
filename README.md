@@ -35,14 +35,16 @@ Configuration items are:
 
 * `File` **sourceDirectory**  
    The directory which should be indexed. This directory is mandatory to be specified. This directory is included in the resulting index file. No default present.
-* `String` **filenameRegEx**  
-   An optional regular expression to index only files that match this regular expression. If it is not specified, all files are used.
 * `boolean` **recursive**  
    Should the source directory be scanned recursively for files?  
    Defaults to `true`
+* `String` **dirnameRegEx** (since v4.0.4)  
+   An optional regular expression to index only directory names that match this regular expression. If it is not specified, all directories are used.
 * `boolean` **sourceChildrenOnly** (since v4.0.2)  
    Should the source directory itself be excluded from the listing? This only has an impact if recursive listing is enabled.
    Defaults to `false`
+* `String` **filenameRegEx**  
+   An optional regular expression to index only files that match this regular expression. If it is not specified, all files are used.
 * `File` **tempDirectory**  
    The directory where the temporary index file will be saved.
    Default: `${project.build.directory}/dirindex-maven-plugin`

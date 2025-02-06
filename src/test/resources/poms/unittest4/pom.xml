@@ -48,10 +48,11 @@
           
           <!-- plugin specific -->
           <tempDirectory>../../../../../target/dirindex-maven-plugin</tempDirectory>
-          <sourceDirectory>../../../../../src/main</sourceDirectory>
+          <sourceDirectory>../../../../../</sourceDirectory>
           <recursive>true</recursive>
+          <dirnameRegEx>[^\.].+</dirnameRegEx>
           <sourceChildrenOnly>true</sourceChildrenOnly>
-          <filenameRegEx>.*\.xml</filenameRegEx>
+          <filenameRegEx>.+\.xml</filenameRegEx>
           <targetDirectory></targetDirectory>
           <targetFilename>dirindex-created4.txt</targetFilename>
           <outputFormat>text-name-only</outputFormat>
