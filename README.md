@@ -244,6 +244,9 @@ Explanation of the three elements:
 
 # News and noteworthy
 
+* v4.0.4 - 2025-02-06
+   * Avoid empty slash at the beginning of a list, if `sourceChildrenOnly` is `true`. See [#9](https://github.com/phax/ph-dirindex-maven-plugin/issues/9) - thx @reda-alaoui
+   * Added new configuration property `dirnameRegEx` that can control in what directories to descent in recursive mode
 * v4.0.3 - 2025-02-05
    * If the property `sourceChildrenOnly` is used, the root path is not contained in the output. See [#8](https://github.com/phax/ph-dirindex-maven-plugin/issues/8) - thx @reda-alaoui
 * v4.0.2 - 2025-02-04
