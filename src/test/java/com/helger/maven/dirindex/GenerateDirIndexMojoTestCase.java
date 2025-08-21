@@ -20,7 +20,7 @@ import java.io.File;
 
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
-import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.io.resource.ClassPathResource;
 
 public final class GenerateDirIndexMojoTestCase extends AbstractMojoTestCase
 {

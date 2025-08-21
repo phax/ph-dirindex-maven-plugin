@@ -22,9 +22,9 @@ import java.nio.charset.StandardCharsets;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.state.ESuccess;
+import com.helger.annotation.Nonempty;
+import com.helger.base.state.ESuccess;
+import com.helger.io.file.SimpleFileIO;
 
 /**
  * {@link IOutputDataCreator} implementation for plain text providing each line

@@ -21,8 +21,8 @@ import java.io.File;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.state.ESuccess;
+import com.helger.annotation.Nonempty;
+import com.helger.base.state.ESuccess;
 
 /**
  * Abstract output data creator interface

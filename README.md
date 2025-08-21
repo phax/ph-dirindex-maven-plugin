@@ -244,29 +244,41 @@ Explanation of the three elements:
 
 # News and noteworthy
 
-* v4.0.4 - 2025-02-06
-   * Avoid empty slash at the beginning of a list, if `sourceChildrenOnly` is `true`. See [#9](https://github.com/phax/ph-dirindex-maven-plugin/issues/9) - thx @reda-alaoui
-   * Added new configuration property `dirnameRegEx` that can control in what directories to descent in recursive mode
-* v4.0.3 - 2025-02-05
-   * If the property `sourceChildrenOnly` is used, the root path is not contained in the output. See [#8](https://github.com/phax/ph-dirindex-maven-plugin/issues/8) - thx @reda-alaoui
-* v4.0.2 - 2025-02-04
-   * Added new configuration property `sourceChildrenOnly` to omit the root directory from listing. See [#6](https://github.com/phax/ph-dirindex-maven-plugin/issues/6) - thx @reda-alaoui
-   * Added new configuration property `outputFormat` to be able to create different outputs. See [#7](https://github.com/phax/ph-dirindex-maven-plugin/issues/7) - thx @reda-alaoui
-* v4.0.1 - 2023-07-01
-    * Removed the `maven-compat` dependencies for Maven 4 compatibility
-    * Build against Maven 3.5.0
-* v4.0.0 - 2023-01-08
-    * Using Java 11 as the baseline
-    * Updated to ph-commons 11
-* v3.0.3 - 2021-03-22
-    * Updated to ph-commons 10
-* v3.0.2 - 2020-03-11
-    * Release with recent library versions
-* v3.0.1 - 2019-06-13
-    * Improved logging
-    * Using annotation based Maven configuration
-* v3.0.0 - 2018-08-06
-    * Updated to ph-commons 9.0.0
+v5.0.0 - work in progress
+* Requires Java 17 as the minimum version
+* Updated to ph-commons 12.0.0
+
+v4.0.4 - 2025-02-06
+* Avoid empty slash at the beginning of a list, if `sourceChildrenOnly` is `true`. See [#9](https://github.com/phax/ph-dirindex-maven-plugin/issues/9) - thx @reda-alaoui
+* Added new configuration property `dirnameRegEx` that can control in what directories to descent in recursive mode
+
+v4.0.3 - 2025-02-05
+* If the property `sourceChildrenOnly` is used, the root path is not contained in the output. See [#8](https://github.com/phax/ph-dirindex-maven-plugin/issues/8) - thx @reda-alaoui
+
+v4.0.2 - 2025-02-04
+* Added new configuration property `sourceChildrenOnly` to omit the root directory from listing. See [#6](https://github.com/phax/ph-dirindex-maven-plugin/issues/6) - thx @reda-alaoui
+* Added new configuration property `outputFormat` to be able to create different outputs. See [#7](https://github.com/phax/ph-dirindex-maven-plugin/issues/7) - thx @reda-alaoui
+
+v4.0.1 - 2023-07-01
+* Removed the `maven-compat` dependencies for Maven 4 compatibility
+* Build against Maven 3.5.0
+
+v4.0.0 - 2023-01-08
+* Using Java 11 as the baseline
+* Updated to ph-commons 11
+
+v3.0.3 - 2021-03-22
+* Updated to ph-commons 10
+
+v3.0.2 - 2020-03-11
+* Release with recent library versions
+
+v3.0.1 - 2019-06-13
+* Improved logging
+* Using annotation based Maven configuration
+
+v3.0.0 - 2018-08-06
+* Updated to ph-commons 9.0.0
 
 ---
 
