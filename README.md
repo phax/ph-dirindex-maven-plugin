@@ -13,7 +13,7 @@ Note: the directory index file is created in a temporary directory (usually some
 <plugin>
   <groupId>com.helger.maven</groupId>
   <artifactId>ph-dirindex-maven-plugin</artifactId>
-  <version>4.0.4</version>
+  <version>5.0.0</version>
   <executions>
     <execution>
       <goals>
@@ -228,23 +228,23 @@ Example output for a `dirindex.xml` file (taken from the [ph-schematron](https:/
 ```
 
 Explanation of the three elements:
-  * `index` - root element:
+* `index` - root element:
     * `@sourcedirectory` the absolute source directory on disc that was scanned
     * `@totaldirs` the overall number of directories contained (recursive)
     * `@totalfiles` the overall number of files contained (recursive) 
-  * `directory` - represents a single directory
+* `directory` - represents a single directory
     * `@name` the full directory name relative to the starting directory
     * `@basename` the name of the directory without any paths
     * `@subdircount` the number of contained sub-directories (excluding `.` and `..`)
     * `@filecount` the number of contained files in this directory (not recursive)
-  * `file` - represents a single file
+* `file` - represents a single file
     * `@name` the full filename including the directories relative to the starting directory
     * `@basename` the name of the file without any paths
     * `@filesize` the size of the file in bytes
 
 # News and noteworthy
 
-v5.0.0 - work in progress
+v5.0.0 - 2025-08-25
 * Requires Java 17 as the minimum version
 * Updated to ph-commons 12.0.0
 
