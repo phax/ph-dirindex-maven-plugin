@@ -19,12 +19,12 @@ package com.helger.maven.dirindex;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
 import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
 import com.helger.base.state.ESuccess;
 import com.helger.io.file.SimpleFileIO;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * {@link IOutputDataCreator} implementation for plain text providing each line

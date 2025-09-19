@@ -18,11 +18,11 @@ package com.helger.maven.dirindex;
 
 import java.io.File;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
 import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
 import com.helger.base.state.ESuccess;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Abstract output data creator interface

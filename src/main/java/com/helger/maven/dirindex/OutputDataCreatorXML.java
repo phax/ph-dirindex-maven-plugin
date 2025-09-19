@@ -18,15 +18,15 @@ package com.helger.maven.dirindex;
 
 import java.io.File;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
 import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
 import com.helger.base.state.ESuccess;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * {@link IOutputDataCreator} implementation for XML.

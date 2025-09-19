@@ -21,8 +21,6 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnull;
-
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -45,6 +43,8 @@ import com.helger.io.file.IFileFilter;
 import com.helger.tree.io.FileSystemFolderTree;
 import com.helger.tree.util.TreeVisitor;
 import com.helger.tree.withid.folder.DefaultFolderTreeItem;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Philip Helger
