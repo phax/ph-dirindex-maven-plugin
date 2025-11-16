@@ -19,12 +19,12 @@ package com.helger.maven.dirindex;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.state.ESuccess;
 import com.helger.io.file.SimpleFileIO;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * {@link IOutputDataCreator} implementation for plain text providing each line
@@ -36,19 +36,19 @@ public class OutputDataCreatorTextNameOnly implements IOutputDataCreator
 {
   private final StringBuilder m_aSB = new StringBuilder ();
 
-  public void init (@Nonnull @Nonempty final String sSourceDirectory)
+  public void init (@NonNull @Nonempty final String sSourceDirectory)
   {}
 
-  public void addDirectory (@Nonnull @Nonempty final String sDirectoryName,
-                            @Nonnull @Nonempty final String sBaseName,
+  public void addDirectory (@NonNull @Nonempty final String sDirectoryName,
+                            @NonNull @Nonempty final String sBaseName,
                             @Nonnegative final int nSubDirCount,
                             @Nonnegative final int nFileCount)
   {
     m_aSB.append (sDirectoryName).append ('/').append ('\n');
   }
 
-  public void addFile (@Nonnull @Nonempty final String sFileName,
-                       @Nonnull @Nonempty final String sBaseName,
+  public void addFile (@NonNull @Nonempty final String sFileName,
+                       @NonNull @Nonempty final String sBaseName,
                        @Nonnegative final long nFileSize)
   {
     m_aSB.append (sFileName).append ('\n');
@@ -57,8 +57,8 @@ public class OutputDataCreatorTextNameOnly implements IOutputDataCreator
   public void addFinalSums (@Nonnegative final int nTotalDirs, @Nonnegative final int nTotalFiles)
   {}
 
-  @Nonnull
-  public ESuccess writeToFile (@Nonnull final File aTarget)
+  @NonNull
+  public ESuccess writeToFile (@NonNull final File aTarget)
   {
     return SimpleFileIO.writeFile (aTarget, m_aSB.toString ().getBytes (StandardCharsets.UTF_8));
   }

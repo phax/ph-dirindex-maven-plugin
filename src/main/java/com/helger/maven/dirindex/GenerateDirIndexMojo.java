@@ -28,6 +28,7 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.jspecify.annotations.NonNull;
 
 import com.helger.base.numeric.mutable.MutableInt;
 import com.helger.base.string.StringHelper;
@@ -43,8 +44,6 @@ import com.helger.io.file.IFileFilter;
 import com.helger.tree.io.FileSystemFolderTree;
 import com.helger.tree.util.TreeVisitor;
 import com.helger.tree.withid.folder.DefaultFolderTreeItem;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Philip Helger
@@ -132,7 +131,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
   @Parameter (property = "outputFormat", defaultValue = "xml", required = true)
   private String outputFormat;
 
-  public void setSourceDirectory (@Nonnull final File aDir) throws IOException
+  public void setSourceDirectory (@NonNull final File aDir) throws IOException
   {
     sourceDirectory = aDir;
     if (!sourceDirectory.isAbsolute ())
@@ -141,7 +140,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       getLog ().error ("Source directory " + sourceDirectory.toString () + " does not exist!");
   }
 
-  public void setTargetDirectory (@Nonnull final String sDir)
+  public void setTargetDirectory (@NonNull final String sDir)
   {
     targetDirectory = sDir;
     if (StringHelper.isNotEmpty (sDir))
@@ -152,7 +151,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     }
   }
 
-  public void setTempDirectory (@Nonnull final File aDir)
+  public void setTempDirectory (@NonNull final File aDir)
   {
     tempDirectory = aDir;
     if (!tempDirectory.isAbsolute ())
@@ -193,9 +192,9 @@ public final class GenerateDirIndexMojo extends AbstractMojo
         getLog ().error ("The output format '" + s + "' is not supported");
   }
 
-  private void _createOutputData (@Nonnull final FileSystemFolderTree aFileTree,
-                                  @Nonnull final MutableInt aTotalDirs,
-                                  @Nonnull final MutableInt aTotalFiles) throws IOException
+  private void _createOutputData (@NonNull final FileSystemFolderTree aFileTree,
+                                  @NonNull final MutableInt aTotalDirs,
+                                  @NonNull final MutableInt aTotalFiles) throws IOException
   {
     m_aOutputCreator.init (sourceDirectory.getCanonicalPath ());
 
@@ -204,7 +203,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     TreeVisitor.visitTree (aFileTree, new DefaultHierarchyVisitorCallback <> ()
     {
       @Override
-      public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultFolderTreeItem <String, File, ICommonsList <File>> aItem)
+      public EHierarchyVisitorReturn onItemBeforeChildren (@NonNull final DefaultFolderTreeItem <String, File, ICommonsList <File>> aItem)
       {
         final String sDirName = aItem.getID ();
         final int nSubDirCount = aItem.getChildCount ();
@@ -239,7 +238,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       }
 
       @Override
-      public EHierarchyVisitorReturn onItemAfterChildren (@Nonnull final DefaultFolderTreeItem <String, File, ICommonsList <File>> aItem)
+      public EHierarchyVisitorReturn onItemAfterChildren (@NonNull final DefaultFolderTreeItem <String, File, ICommonsList <File>> aItem)
       {
         final boolean bLogThisDirectory = !recursive || !sourceChildrenOnly || aAbsoluteDirStack.size () > 1;
         if (bLogThisDirectory)

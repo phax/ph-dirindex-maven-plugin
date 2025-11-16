@@ -18,11 +18,11 @@ package com.helger.maven.dirindex;
 
 import java.io.File;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.state.ESuccess;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract output data creator interface
@@ -31,17 +31,17 @@ import jakarta.annotation.Nonnull;
  */
 public interface IOutputDataCreator
 {
-  void init (@Nonnull @Nonempty String sSourceDirectory);
+  void init (@NonNull @Nonempty String sSourceDirectory);
 
-  void addDirectory (@Nonnull @Nonempty String sDirectoryName,
-                     @Nonnull @Nonempty String sBaseName,
+  void addDirectory (@NonNull @Nonempty String sDirectoryName,
+                     @NonNull @Nonempty String sBaseName,
                      @Nonnegative int nSubDirCount,
                      @Nonnegative int nFileCount);
 
-  void addFile (@Nonnull @Nonempty String sFileName, @Nonnull @Nonempty String sBaseName, @Nonnegative long nFileSize);
+  void addFile (@NonNull @Nonempty String sFileName, @NonNull @Nonempty String sBaseName, @Nonnegative long nFileSize);
 
   void addFinalSums (@Nonnegative int nTotalDirs, @Nonnegative int nTotalFiles);
 
-  @Nonnull
-  ESuccess writeToFile (@Nonnull File aTarget);
+  @NonNull
+  ESuccess writeToFile (@NonNull File aTarget);
 }
