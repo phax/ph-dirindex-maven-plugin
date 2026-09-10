@@ -25,10 +25,9 @@ import com.helger.io.resource.ClassPathResource;
 public final class GenerateDirIndexMojoTestCase extends AbstractMojoTestCase
 {
   /**
-   * This test requires an installed version of the plugin in the local Maven
-   * repository. So call <code>mvn install</code> to run this test for the first
-   * time. Afterwards the test can be run again until the next modification
-   * occurs.
+   * This test requires an installed version of the plugin in the local Maven repository. So call
+   * <code>mvn install</code> to run this test for the first time. Afterwards the test can be run
+   * again until the next modification occurs.
    *
    * @throws Exception
    *         if any

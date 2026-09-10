@@ -27,8 +27,7 @@ import com.helger.base.state.ESuccess;
 import com.helger.io.file.SimpleFileIO;
 
 /**
- * {@link IOutputDataCreator} implementation for plain text providing each line
- * per name.
+ * {@link IOutputDataCreator} implementation for plain text providing each line per name.
  *
  * @author Philip Helger
  */

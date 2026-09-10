@@ -303,8 +303,8 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       }
       if (StringHelper.isNotEmpty (dirnameRegEx))
       {
-        aDirFilter = aDirFilter == null ? IFileFilter.filenameMatchAnyRegEx (dirnameRegEx) : aDirFilter.and (IFileFilter
-                                                                                                                        .filenameMatchAnyRegEx (dirnameRegEx));
+        aDirFilter = aDirFilter == null ? IFileFilter.filenameMatchAnyRegEx (dirnameRegEx)
+                                        : aDirFilter.and (IFileFilter.filenameMatchAnyRegEx (dirnameRegEx));
       }
 
       // Build the filename filter
